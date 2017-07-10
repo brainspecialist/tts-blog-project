@@ -3,10 +3,10 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= @post.title %> <small>by <%= @post.author %></small></h3>
+    <h3 class="panel-title"><%= @post.title %> <small>by <%= image_tag @post.user.avatar.url, class: "avatar" %> <%= @post.user.username %></small></h3>
   </div>
   <div class="panel-body">
-    <p><%= @post.blog_entry %></p>
+    <p><%= @post.blog_entry.html_safe %></p>
   </div>
 </div>
 
@@ -20,7 +20,7 @@
 <% @post.comments.each do |comment| %>
   <div class="panel panel-default">
 	<div class="panel-heading">
-	  <h4 class="panel-title"><%= comment.author %></h4>
+	  <h4 class="panel-title"><%= image_tag comment.user.avatar.url, class: "avatar" %> <%= link_to comment.user.username, user_posts_path(name: comment.user.username) %></h4>
 	</div>
 	<div class="panel-body">
 	  <p><%= comment.comment_entry %></p>
