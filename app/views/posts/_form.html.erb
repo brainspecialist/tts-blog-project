@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="form-group">
+    <strong>Upload an image to accompany your post:</strong>
+    <%= form.file_field :post_pic %>
+  </div>
+
+  <div class="form-group">
     <%= form.text_field :title, placeholder: "Snappy Title", class: "form-control" %>
   </div>
 

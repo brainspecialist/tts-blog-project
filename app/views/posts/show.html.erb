@@ -1,29 +1,63 @@
 <p id="notice"><%= notice %></p>
 
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= @post.title %> <small>by <%= image_tag @post.user.avatar.url, class: "avatar" %> <%= @post.user.username %></small></h3>
-  </div>
-  <div class="panel-body">
-    <p><%= @post.blog_entry.html_safe %></p>
+<!-- row 1: post title-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h1><%= @post.title %></h1>
+        <% if current_user.id == @post.user_id %>
+          <button type="button" class="btn btn-default pull-right"><%= link_to 'Edit', edit_post_path(@post) %></button>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
-
-<div id="comments">
-  <%= render 'comments/form', comment: @comment %>
+<!--row 2: author info and post body-->
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= image_tag @post.user.avatar.url, class: "avatar img-rounded" %>
+        <div class="pull-right text-right">
+          <h4>Written by</h4>
+          <h3><%= @post.user.username %></h3>
+          <h3><small><%= @post.created_at %></small></h3>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= image_tag @post.post_pic.url, class: "img-responsive" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p><%= @post.blog_entry.html_safe %></p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<% @post.comments.each do |comment| %>
-  <div class="panel panel-default">
-	<div class="panel-heading">
-	  <h4 class="panel-title"><%= image_tag comment.user.avatar.url, class: "avatar" %> <%= link_to comment.user.username, user_posts_path(name: comment.user.username) %></h4>
-	</div>
-	<div class="panel-body">
-	  <p><%= comment.comment_entry %></p>
-	</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div id="comments">
+      <%= render 'comments/form', comment: @comment %>
+    </div>
+
+    <% @post.comments.each do |comment| %>
+      <div class="panel panel-default">
+    	<div class="panel-heading">
+    	  <h4 class="panel-title"><%= image_tag comment.user.avatar.url, class: "avatar img-rounded" %> <%= link_to comment.user.username, user_posts_path(name: comment.user.username) %></h4>
+    	</div>
+    	<div class="panel-body">
+    	  <p><%= comment.comment_entry %></p>
+    	</div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
